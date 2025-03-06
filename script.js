@@ -38,6 +38,7 @@ function validate(nameValue, urlValue) {
 }
 
 function buildBookmarks() {
+    bookmarksContainer.textContent = ''
     bookmarks.forEach((bookmark) => {
         const { name, url} = bookmark
         const item = document.createElement('div')
@@ -77,6 +78,18 @@ function fetchBookmarks() {
 
 }
 
+function deleteBookmark(url) {
+    bookmarks.forEach((bookmark, i) => {
+        if(bookmark.url === url) {
+            bookmarks.splice(i, 1)
+        }
+    })
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
+    fetchBookmarks()
+}
+
+
+
 function storeBookmark(e) {
     e.preventDefault()
     const nameValue = websiteNameEl.value
@@ -96,7 +109,6 @@ function storeBookmark(e) {
     fetchBookmarks()
     bookmarkForm.reset()
     websiteNameEl.focus()
-
 }
 
 bookmarkForm.addEventListener('submit', storeBookmark)
